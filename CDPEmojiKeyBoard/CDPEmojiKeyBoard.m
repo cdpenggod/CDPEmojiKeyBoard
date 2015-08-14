@@ -83,7 +83,7 @@
             _mode=CDPEmojiKeyBoardMode1;
         }
         else{
-            //监听系统键盘出现
+            //监听系统键盘出现(主要为CDPEmojiKeyBoardMode2提供)
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(systemKeyBoardWillShow) name:UIKeyboardWillShowNotification object:nil];
             
             _backgroundView.frame=CGRectMake(0,SHeight,SWidth,_keyBoardHeight);
