@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5E0EBCCA1B7DBC7200445BB0 /* CDPEmojiKeyBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E0EBCC11B7DBC7200445BB0 /* CDPEmojiKeyBoard.m */; };
+		5E0EBCCB1B7DBC7200445BB0 /* btn_face@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5E0EBCC31B7DBC7200445BB0 /* btn_face@2x.png */; };
+		5E0EBCCC1B7DBC7200445BB0 /* btn_face@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5E0EBCC41B7DBC7200445BB0 /* btn_face@3x.png */; };
+		5E0EBCCD1B7DBC7200445BB0 /* btn_keyboard@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5E0EBCC51B7DBC7200445BB0 /* btn_keyboard@2x.png */; };
+		5E0EBCCE1B7DBC7200445BB0 /* btn_keyboard@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5E0EBCC61B7DBC7200445BB0 /* btn_keyboard@3x.png */; };
+		5E0EBCCF1B7DBC7200445BB0 /* emoji_backspace.png in Resources */ = {isa = PBXBuildFile; fileRef = 5E0EBCC71B7DBC7200445BB0 /* emoji_backspace.png */; };
+		5E0EBCD01B7DBC7200445BB0 /* emoji_backspace@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5E0EBCC81B7DBC7200445BB0 /* emoji_backspace@2x.png */; };
+		5E0EBCD11B7DBC7200445BB0 /* EmojisList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5E0EBCC91B7DBC7200445BB0 /* EmojisList.plist */; };
 		87BCE3991B7C937700EB483C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 87BCE3981B7C937700EB483C /* main.m */; };
 		87BCE39C1B7C937700EB483C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 87BCE39B1B7C937700EB483C /* AppDelegate.m */; };
 		87BCE39F1B7C937700EB483C /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87BCE39E1B7C937700EB483C /* ViewController.m */; };
@@ -27,6 +35,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5E0EBCC01B7DBC7200445BB0 /* CDPEmojiKeyBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDPEmojiKeyBoard.h; sourceTree = "<group>"; };
+		5E0EBCC11B7DBC7200445BB0 /* CDPEmojiKeyBoard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDPEmojiKeyBoard.m; sourceTree = "<group>"; };
+		5E0EBCC31B7DBC7200445BB0 /* btn_face@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_face@2x.png"; sourceTree = "<group>"; };
+		5E0EBCC41B7DBC7200445BB0 /* btn_face@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_face@3x.png"; sourceTree = "<group>"; };
+		5E0EBCC51B7DBC7200445BB0 /* btn_keyboard@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_keyboard@2x.png"; sourceTree = "<group>"; };
+		5E0EBCC61B7DBC7200445BB0 /* btn_keyboard@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_keyboard@3x.png"; sourceTree = "<group>"; };
+		5E0EBCC71B7DBC7200445BB0 /* emoji_backspace.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = emoji_backspace.png; sourceTree = "<group>"; };
+		5E0EBCC81B7DBC7200445BB0 /* emoji_backspace@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "emoji_backspace@2x.png"; sourceTree = "<group>"; };
+		5E0EBCC91B7DBC7200445BB0 /* EmojisList.plist */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = EmojisList.plist; sourceTree = "<group>"; };
 		87BCE3931B7C937700EB483C /* emojiKeyBoard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = emojiKeyBoard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		87BCE3971B7C937700EB483C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		87BCE3981B7C937700EB483C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -60,9 +77,34 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5E0EBCBF1B7DBC7200445BB0 /* CDPEmojiKeyBoard */ = {
+			isa = PBXGroup;
+			children = (
+				5E0EBCC01B7DBC7200445BB0 /* CDPEmojiKeyBoard.h */,
+				5E0EBCC11B7DBC7200445BB0 /* CDPEmojiKeyBoard.m */,
+				5E0EBCC21B7DBC7200445BB0 /* CDPEmojiResource */,
+			);
+			path = CDPEmojiKeyBoard;
+			sourceTree = "<group>";
+		};
+		5E0EBCC21B7DBC7200445BB0 /* CDPEmojiResource */ = {
+			isa = PBXGroup;
+			children = (
+				5E0EBCC31B7DBC7200445BB0 /* btn_face@2x.png */,
+				5E0EBCC41B7DBC7200445BB0 /* btn_face@3x.png */,
+				5E0EBCC51B7DBC7200445BB0 /* btn_keyboard@2x.png */,
+				5E0EBCC61B7DBC7200445BB0 /* btn_keyboard@3x.png */,
+				5E0EBCC71B7DBC7200445BB0 /* emoji_backspace.png */,
+				5E0EBCC81B7DBC7200445BB0 /* emoji_backspace@2x.png */,
+				5E0EBCC91B7DBC7200445BB0 /* EmojisList.plist */,
+			);
+			path = CDPEmojiResource;
+			sourceTree = "<group>";
+		};
 		87BCE38A1B7C937700EB483C = {
 			isa = PBXGroup;
 			children = (
+				5E0EBCBF1B7DBC7200445BB0 /* CDPEmojiKeyBoard */,
 				87BCE3951B7C937700EB483C /* emojiKeyBoard */,
 				87BCE3AF1B7C937700EB483C /* emojiKeyBoardTests */,
 				87BCE3941B7C937700EB483C /* Products */,
@@ -164,7 +206,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0640;
-				ORGANIZATIONNAME = Wolonge;
+				ORGANIZATIONNAME = "柴东鹏";
 				TargetAttributes = {
 					87BCE3921B7C937700EB483C = {
 						CreatedOnToolsVersion = 6.4;
@@ -199,9 +241,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5E0EBCCD1B7DBC7200445BB0 /* btn_keyboard@2x.png in Resources */,
 				87BCE3A21B7C937700EB483C /* Main.storyboard in Resources */,
 				87BCE3A71B7C937700EB483C /* LaunchScreen.xib in Resources */,
+				5E0EBCCB1B7DBC7200445BB0 /* btn_face@2x.png in Resources */,
+				5E0EBCCC1B7DBC7200445BB0 /* btn_face@3x.png in Resources */,
+				5E0EBCD11B7DBC7200445BB0 /* EmojisList.plist in Resources */,
 				87BCE3A41B7C937700EB483C /* Images.xcassets in Resources */,
+				5E0EBCD01B7DBC7200445BB0 /* emoji_backspace@2x.png in Resources */,
+				5E0EBCCF1B7DBC7200445BB0 /* emoji_backspace.png in Resources */,
+				5E0EBCCE1B7DBC7200445BB0 /* btn_keyboard@3x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -220,6 +269,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				87BCE39F1B7C937700EB483C /* ViewController.m in Sources */,
+				5E0EBCCA1B7DBC7200445BB0 /* CDPEmojiKeyBoard.m in Sources */,
 				87BCE39C1B7C937700EB483C /* AppDelegate.m in Sources */,
 				87BCE3991B7C937700EB483C /* main.m in Sources */,
 			);
@@ -299,7 +349,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -337,7 +387,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -349,7 +399,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				INFOPLIST_FILE = emojiKeyBoard/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -359,7 +411,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				INFOPLIST_FILE = emojiKeyBoard/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -418,6 +472,7 @@
 				87BCE3B81B7C937700EB483C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		87BCE3B91B7C937700EB483C /* Build configuration list for PBXNativeTarget "emojiKeyBoardTests" */ = {
 			isa = XCConfigurationList;
@@ -426,6 +481,7 @@
 				87BCE3BB1B7C937700EB483C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
