@@ -18,6 +18,8 @@
     UIPageControl *_pageControl;//页码控制器
     CDPEmojiKeyBoardMode _mode;
     UIScrollView *_backgroundScrollView;
+    
+    NSInteger _cursorPosition;//CDPEmojiKeyBoardMode2下光标位置
 
 }
 
@@ -190,21 +192,26 @@
 //CDPEmojiKeyBoardMode2情况下退格字符判断
 -(NSString *)judgeTheText:(NSString *)text{
     NSMutableString *str=[NSMutableString stringWithString:text];
-    if (str.length<2) {
-        [str deleteCharactersInRange:NSMakeRange(str.length-1,1)];
+    if (_cursorPosition==0) {
         return str;
     }
-    NSString *deleteStr=[str substringFromIndex:str.length-2];
+    if (str.length==1) {
+        [str deleteCharactersInRange:NSMakeRange(_cursorPosition-1,1)];
+        _cursorPosition=_cursorPosition-1;
+        return str;
+    }
+    NSString *deleteStr=[str substringWithRange:NSMakeRange(_cursorPosition-2,2)];
     
     for (NSString *emojiStr in _emojiArr) {
         if ([emojiStr isEqualToString:deleteStr]) {
-            [str deleteCharactersInRange:NSMakeRange(str.length-2,2)];
+            [str deleteCharactersInRange:NSMakeRange(_cursorPosition-2,2)];
+            _cursorPosition=_cursorPosition-2;
             return str;
         }
     }
     
-    [str deleteCharactersInRange:NSMakeRange(str.length-1,1)];
-    
+    [str deleteCharactersInRange:NSMakeRange(_cursorPosition-1,1)];
+    _cursorPosition=_cursorPosition-1;
     return str;
 }
 //点击选择表情
@@ -239,13 +246,17 @@
                 
                 if (_inputView.class==UITextField.class) {
                     UITextField *textField=(UITextField *)_inputView;
-                    NSString *str=textField.text;
-                    textField.text=[NSString stringWithFormat:@"%@%@",str,emojiLabel.text];
+                    NSMutableString *str=[NSMutableString stringWithString:textField.text];
+                    [str insertString:emojiLabel.text atIndex:_cursorPosition];
+                    textField.text=[NSString stringWithFormat:@"%@",str];
+                    _cursorPosition=_cursorPosition+2;
                 }
                 if (_inputView.class==UITextView.class) {
                     UITextView *textView=(UITextView *)_inputView;
-                    NSString *str=textView.text;
-                    textView.text=[NSString stringWithFormat:@"%@%@",str,emojiLabel.text];
+                    NSMutableString *str=[NSMutableString stringWithString:textView.text];
+                    [str insertString:emojiLabel.text atIndex:_cursorPosition];
+                    textView.text=[NSString stringWithFormat:@"%@",str];
+                    _cursorPosition=_cursorPosition+2;
                 }
             }
         }
@@ -290,6 +301,15 @@
         }
             break;
         case CDPEmojiKeyBoardMode2:{
+            //获取光标位置
+            if (_inputView.class==UITextField.class) {
+                UITextField *textField=(UITextField *)_inputView;
+                _cursorPosition=[textField offsetFromPosition:textField.beginningOfDocument toPosition:textField.selectedTextRange.start];
+            }
+            if (_inputView.class==UITextView.class) {
+                UITextView *textView=(UITextView *)_inputView;
+                _cursorPosition=[textView offsetFromPosition:textView.beginningOfDocument toPosition:textView.selectedTextRange.start];
+            }
             
             [_inputView resignFirstResponder];
 
@@ -342,6 +362,7 @@
     [self.delegate didWhenKeyboardDisAppear];
 }
 #pragma mark 监听系统键盘
+//系统键盘出现
 -(void)systemKeyBoardWillShow{
     if (_mode==CDPEmojiKeyBoardMode2) {
         [self keyboardDisAppear];
