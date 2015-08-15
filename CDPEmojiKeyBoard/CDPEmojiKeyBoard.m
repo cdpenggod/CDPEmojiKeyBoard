@@ -195,7 +195,7 @@
     if (_cursorPosition==0) {
         return str;
     }
-    if (str.length==1) {
+    if (_cursorPosition==1) {
         [str deleteCharactersInRange:NSMakeRange(_cursorPosition-1,1)];
         _cursorPosition=_cursorPosition-1;
         return str;
