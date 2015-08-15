@@ -42,7 +42,9 @@ typedef NSInteger CDPEmojiKeyBoardMode;//emoji键盘模式
 //代理
 @property (nonatomic,weak) id <CDPEmojiKeyBoardDelegate> delegate;
 
-//初始化并设置相关参数(mode默认为CDPEmojiKeyBoardMode1)
+//初始化并设置相关参数
+//mode默认为CDPEmojiKeyBoardMode1
+//superView为inputView所在viewController的主视图,即self.view,主要为CDPEmojiKeyBoardMode2提供
 -(id)initWithInputView:(UIView *)inputView andSuperView:(UIView *)superView keyBoardMode:(CDPEmojiKeyBoardMode)mode;
 
 //弹出键盘(CDPEmojiKeyBoardMode1情况下会与输入视图进行绑定)

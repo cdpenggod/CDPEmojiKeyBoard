@@ -91,17 +91,22 @@
         }
     }
     
+    //判断页数
+    NSInteger pageNum=24*(_emojiArr.count/24)>=_emojiArr.count?_emojiArr.count/24:_emojiArr.count/24+1;
+    
     _backgroundScrollView=[[UIScrollView alloc] initWithFrame:CGRectMake(0,0,SWidth,_keyBoardHeight)];
     _backgroundScrollView.pagingEnabled=YES;
     _backgroundScrollView.showsHorizontalScrollIndicator=NO;
     _backgroundScrollView.backgroundColor=[UIColor clearColor];
     _backgroundScrollView.delegate=self;
-    _backgroundScrollView.contentSize=CGSizeMake(SWidth*8,_backgroundScrollView.bounds.size.height);
+    _backgroundScrollView.contentSize=CGSizeMake(SWidth*pageNum,_backgroundScrollView.bounds.size.height);
     [_backgroundView addSubview:_backgroundScrollView];
     //添加emoji表情
     for (int j=0; j<_emojiArr.count; j++) {
-        CGFloat width=(SWidth-250)/7+30;
-
+        //两个表情x的位置差
+        CGFloat width=(SWidth-(30*8+10))/7+30;
+        
+        //表情所在行数、列数、页数
         NSInteger row,col,pageIdx;
         row=(j/8 ) %3;
         col=(j+1) % 8 ==0? 8: (j +1 )%8;
@@ -127,7 +132,7 @@
     
     //页码控制器
     _pageControl=[[UIPageControl alloc]initWithFrame:CGRectMake(50,135,SWidth-100,36)];
-    _pageControl.numberOfPages=8;
+    _pageControl.numberOfPages=pageNum;
     _pageControl.currentPage=0;
     _pageControl.userInteractionEnabled=NO;
     _pageControl.currentPageIndicatorTintColor = [UIColor colorWithRed:85/255.f green:85/255.f blue:85/255.f alpha:1];
