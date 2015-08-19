@@ -94,6 +94,7 @@
 #pragma mark CDPEmojiKeyboardMode2Delegate
 //系统键盘出现
 -(void)didWhenSystemKeyboardAppear:(NSNotification *)notification{
+    [button setImage:[UIImage imageNamed:@"btn_face"] forState:UIControlStateNormal];
     NSLog(@"系统键盘出现");
 }
 //系统键盘消失
