@@ -2,8 +2,8 @@
 //  ViewController.h
 //  emojiKeyBoard
 //
-//  Created by Wolonge on 15/8/13.
-//  Copyright (c) 2015年 Wolonge. All rights reserved.
+//  Created by 柴东鹏 on 15/8/13.
+//  Copyright (c) 2015年 柴东鹏. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

@@ -2,8 +2,8 @@
 //  CDPEmojiKeyBoard.m
 //  emojiKeyBoard
 //
-//  Created by Wolonge on 15/8/13.
-//  Copyright (c) 2015年 Wolonge. All rights reserved.
+//  Created by 柴东鹏 on 15/8/13.
+//  Copyright (c) 2015年 柴东鹏. All rights reserved.
 //
 
 #import "CDPEmojiKeyBoard.h"
@@ -11,26 +11,29 @@
 #define SWidth [UIScreen mainScreen].bounds.size.width
 
 @implementation CDPEmojiKeyBoard{
+    UIView *_backgroundView;//表情键盘背景视图
     UIView *_inputView;//输入视图
     UIView *_superView;//输入视图所在的viewController主视图
     NSArray *_emojiArr;//表情包
     BOOL _isRun;//是否可执行
     UIPageControl *_pageControl;//页码控制器
-    CDPEmojiKeyBoardMode _mode;
+    CDPEmojiKeyboardMode _mode;
     UIScrollView *_backgroundScrollView;
     
     NSInteger _cursorPosition;//CDPEmojiKeyBoardMode2下光标位置
+    NSInteger _y;//CDPEmojiKeyBoardMode2模式下表情键盘未出现时位于屏幕最底部的y值
 
 }
 
 //初始化并设置相关参数
--(id)initWithInputView:(UIView *)inputView andSuperView:(UIView *)superView keyBoardMode:(CDPEmojiKeyBoardMode)mode{
+-(id)initWithInputView:(UIView *)inputView andSuperView:(UIView *)superView yOfScreenBottom:(NSInteger)y keyboardMode:(CDPEmojiKeyboardMode)mode{
     if (self=[super init]) {
         _isAppear=NO;
-        _keyBoardHeight=183;
+        _keyboardHeight=183;
         _superView=superView;
+        _y=y;
         if (!mode) {
-            mode=CDPEmojiKeyBoardMode1;
+            mode=CDPEmojiKeyboardMode1;
         }
         else{
             _mode=mode;
@@ -54,49 +57,51 @@
     return self;
 }
 //设置键盘高度
--(void)setKeyBoardHeight:(NSInteger)keyBoardHeight{
+-(void)setKeyboardHeight:(NSInteger)keyboardHeight{
     
-    _keyBoardHeight=keyBoardHeight;
+    _keyboardHeight=keyboardHeight;
     
-    if (_mode==CDPEmojiKeyBoardMode1) {
-        _backgroundView.frame=CGRectMake(0,0,SWidth,_keyBoardHeight);
+    if (_mode==CDPEmojiKeyboardMode1) {
+        _backgroundView.frame=CGRectMake(0,0,SWidth,_keyboardHeight);
     }
-    if (_mode==CDPEmojiKeyBoardMode2) {
-        _backgroundView.frame=CGRectMake(0,SHeight,SWidth,_keyBoardHeight);
+    if (_mode==CDPEmojiKeyboardMode2) {
+        _backgroundView.frame=CGRectMake(0,_y,SWidth,_keyboardHeight);
     }
-    _backgroundScrollView.frame=CGRectMake(0,0,SWidth,_keyBoardHeight);
+    _backgroundScrollView.frame=CGRectMake(0,0,SWidth,_keyboardHeight);
     _backgroundScrollView.contentSize=CGSizeMake(SWidth*8,_backgroundScrollView.bounds.size.height);
 }
 #pragma mark 创建数据及UI
 //数据
 -(void)createData{
+    //只调取people相关emoji表情
     NSDictionary *emojiDict=[NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"EmojisList" ofType:@"plist"]];
     _emojiArr=[emojiDict objectForKey:@"People"];
 }
 //UI
 -(void)createUI{
     //背景视图
-    _backgroundView=[[UIView alloc] initWithFrame:CGRectMake(0,0,SWidth,_keyBoardHeight)];
+    _backgroundView=[[UIView alloc] initWithFrame:CGRectMake(0,0,SWidth,_keyboardHeight)];
     _backgroundView.backgroundColor=[UIColor colorWithRed:246/255.f green:246/255.f blue:246/255.f alpha:1];
     
-    if (_mode==CDPEmojiKeyBoardMode2) {
+    if (_mode==CDPEmojiKeyboardMode2) {
         if (!_superView) {
             NSLog(@"superView不存在,mode变为CDPEmojiKeyBoardMode1");
-            _mode=CDPEmojiKeyBoardMode1;
+            _mode=CDPEmojiKeyboardMode1;
         }
         else{
-            //监听系统键盘出现(主要为CDPEmojiKeyBoardMode2提供)
-            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(systemKeyBoardWillShow) name:UIKeyboardWillShowNotification object:nil];
+            //系统键盘监听(为CDPEmojiKeyBoardMode2提供)
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(systemKeyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
             
-            _backgroundView.frame=CGRectMake(0,SHeight,SWidth,_keyBoardHeight);
-            [_superView addSubview:_backgroundView];
-        }
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(systemKeyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+            
+            _backgroundView.frame=CGRectMake(0,_y,SWidth,_keyboardHeight);
+            [_superView addSubview:_backgroundView];        }
     }
     
     //判断页数
     NSInteger pageNum=24*(_emojiArr.count/24)>=_emojiArr.count?_emojiArr.count/24:_emojiArr.count/24+1;
     
-    _backgroundScrollView=[[UIScrollView alloc] initWithFrame:CGRectMake(0,0,SWidth,_keyBoardHeight)];
+    _backgroundScrollView=[[UIScrollView alloc] initWithFrame:CGRectMake(0,0,SWidth,_keyboardHeight)];
     _backgroundScrollView.pagingEnabled=YES;
     _backgroundScrollView.showsHorizontalScrollIndicator=NO;
     _backgroundScrollView.backgroundColor=[UIColor clearColor];
@@ -142,6 +147,19 @@
     [_backgroundView addSubview:_pageControl];
     
 }
+#pragma mark CDPEmojiKeyBoardMode2模式下系统键盘监听
+//系统键盘出现
+-(void)systemKeyboardWillShow:(NSNotification *)notification{
+    //收回emoji键盘
+    [self keyboardDisAppear];
+    
+    [self.delegateForMode2 didWhenSystemKeyboardAppear:notification];
+}
+//系统键盘消失
+-(void)systemKeyboardWillHide:(NSNotification *)notification{
+    [self.delegateForMode2 didWhenSystemKeyboardDisappear:notification];
+}
+
 #pragma mark 键盘点击事件
 //退格
 -(void)backspaceClick{
@@ -151,7 +169,7 @@
     }
     //模式判断
     switch (_mode) {
-        case CDPEmojiKeyBoardMode1:{
+        case CDPEmojiKeyboardMode1:{
             if (_inputView.class==UITextField.class) {
                 
                 UITextField *textField=(UITextField *)_inputView;
@@ -164,7 +182,7 @@
             
         }
             break;
-        case CDPEmojiKeyBoardMode2:{
+        case CDPEmojiKeyboardMode2:{
             if (_inputView.class==UITextField.class) {
                 UITextField *textField=(UITextField *)_inputView;
                 if ([textField.text isEqual:@""]) {
@@ -222,7 +240,7 @@
     }
     //模式判断
     switch (_mode) {
-        case CDPEmojiKeyBoardMode1:{
+        case CDPEmojiKeyboardMode1:{
             if (tap.state==UIGestureRecognizerStateEnded) {
                 
                 UILabel *emojiLabel=(UILabel*)[tap view];
@@ -239,7 +257,7 @@
             
         }
             break;
-        case CDPEmojiKeyBoardMode2:{
+        case CDPEmojiKeyboardMode2:{
             if (tap.state==UIGestureRecognizerStateEnded) {
                 
                 UILabel *emojiLabel=(UILabel*)[tap view];
@@ -274,7 +292,7 @@
     
     _pageControl.currentPage=pageNumber;
 }
-#pragma mark 与输入视图的绑定操作
+#pragma mark emoji表情键盘出现与消失
 //弹出键盘(CDPEmojiKeyBoardMode1情况下会与输入视图进行绑定)
 -(void)keyboardAppear{
     if (_isRun==NO) {
@@ -285,7 +303,7 @@
     _isAppear=YES;
     //模式判断
     switch (_mode) {
-        case CDPEmojiKeyBoardMode1:{
+        case CDPEmojiKeyboardMode1:{
             [_inputView resignFirstResponder];
             
             if (_inputView.class==UITextField.class) {
@@ -300,7 +318,8 @@
             [_inputView becomeFirstResponder];
         }
             break;
-        case CDPEmojiKeyBoardMode2:{
+        case CDPEmojiKeyboardMode2:{
+            
             //获取光标位置
             if (_inputView.class==UITextField.class) {
                 UITextField *textField=(UITextField *)_inputView;
@@ -314,7 +333,7 @@
             [_inputView resignFirstResponder];
 
             [UIView animateWithDuration:0.3 animations:^{
-                _backgroundView.transform=CGAffineTransformMakeTranslation(0,-_keyBoardHeight);
+                _backgroundView.transform=CGAffineTransformMakeTranslation(0,-_keyboardHeight);
                 
             }];
         }
@@ -334,7 +353,7 @@
     _isAppear=NO;
     //模式判断
     switch (_mode) {
-        case CDPEmojiKeyBoardMode1:{
+        case CDPEmojiKeyboardMode1:{
             [_inputView resignFirstResponder];
             
             if (_inputView.class==UITextField.class) {
@@ -348,7 +367,7 @@
 
         }
             break;
-        case CDPEmojiKeyBoardMode2:{
+        case CDPEmojiKeyboardMode2:{
             
             [UIView animateWithDuration:0.3 animations:^{
                 _backgroundView.transform=CGAffineTransformMakeTranslation(0,0);
@@ -359,25 +378,18 @@
         default:
             break;
     }
-    [self.delegate didWhenKeyboardDisAppear];
+    [self.delegate didWhenKeyboardDisappear];
 }
-#pragma mark 监听系统键盘
-//系统键盘出现
--(void)systemKeyBoardWillShow{
-    if (_mode==CDPEmojiKeyBoardMode2) {
-        [self keyboardDisAppear];
-    }
-}
-
-
 
 -(void)dealloc{
-    if (_mode==CDPEmojiKeyBoardMode2) {
-        //取消监听系统键盘
+    //取消系统监听
+    if (_mode==CDPEmojiKeyboardMode2) {
         [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+        
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
     }
+    
 }
-
 
 
 

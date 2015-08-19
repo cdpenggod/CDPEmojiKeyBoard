@@ -2,17 +2,18 @@
 //  ViewController.m
 //  emojiKeyBoard
 //
-//  Created by Wolonge on 15/8/13.
-//  Copyright (c) 2015年 Wolonge. All rights reserved.
+//  Created by 柴东鹏 on 15/8/13.
+//  Copyright (c) 2015年 柴东鹏. All rights reserved.
 //
 
 #import "ViewController.h"
 #import "CDPEmojiKeyBoard.h"
 
-@interface ViewController () <CDPEmojiKeyBoardDelegate> {
+@interface ViewController () <CDPEmojiKeyboardDelegate,CDPEmojiKeyboardMode2Delegate> {
     UITextField *_textField;//输入视图,textField或者textView
     CDPEmojiKeyBoard *emojiKeyBoard;//emoji键盘
     UIButton *button;//切换键盘按钮
+    NSInteger _currentKeyboardMode;//当前表情键盘的模式
 }
 
 @end
@@ -28,10 +29,17 @@
     _textField.textColor=[UIColor redColor];
     [self.view addSubview:_textField];
     
+    //设置键盘模式
+    _currentKeyboardMode=1;
+    
     //创建emoji键盘
-    emojiKeyBoard=[[CDPEmojiKeyBoard alloc] initWithInputView:_textField andSuperView:self.view keyBoardMode:1];
-    //设置代理,非必要,是否设置看个人需求
+    emojiKeyBoard=[[CDPEmojiKeyBoard alloc] initWithInputView:_textField andSuperView:self.view yOfScreenBottom:self.view.bounds.size.height keyboardMode:_currentKeyboardMode];
     emojiKeyBoard.delegate=self;
+    
+    //模式2下必须遵守的代理
+    if (_currentKeyboardMode==1) {
+        emojiKeyBoard.delegateForMode2=self;
+    }
     
     //切换键盘按钮
     button=[[UIButton alloc] initWithFrame:CGRectMake(20,160,24,24)];
@@ -45,36 +53,54 @@
     [self.view addSubview:label];
 }
 
+//切换键盘button点击
 -(void)emojiButtonClick{
     if (emojiKeyBoard.isAppear==NO) {
-        //键盘出现
+        //emoji键盘出现
         [emojiKeyBoard keyboardAppear];
     }
     else{
-        //键盘消失
-        [emojiKeyBoard keyboardDisAppear];
-        //进入输入状态,系统键盘出现
-        [_textField becomeFirstResponder];
+        //切换为系统键盘出现
+        if(_currentKeyboardMode==0){
+            //第一种模式
+            [emojiKeyBoard keyboardDisAppear];
+            [_textField becomeFirstResponder];
+        }
+        else{
+            //第二种模式
+            [_textField becomeFirstResponder];
+        }
     }
 }
 //点击视图空白处
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
-    //键盘消失
+    //emoji键盘消失
     [emojiKeyBoard keyboardDisAppear];
     //结束输入状态
     [self.view endEditing:YES];
 
 }
-#pragma mark CDPEmojiKeyBoardDelegate
+
+#pragma mark CDPEmojiKeyboardDelegate
+//emoji键盘出现
 -(void)didWhenKeyboardAppear{
-    NSLog(@"emoji键盘出现了");
     [button setImage:[UIImage imageNamed:@"btn_keyboard"] forState:UIControlStateNormal];
 }
--(void)didWhenKeyboardDisAppear{
-    NSLog(@"emoji键盘消失了");
+//emoji键盘消失
+-(void)didWhenKeyboardDisappear{
     [button setImage:[UIImage imageNamed:@"btn_face"] forState:UIControlStateNormal];
-
 }
+
+#pragma mark CDPEmojiKeyboardMode2Delegate
+//系统键盘出现
+-(void)didWhenSystemKeyboardAppear:(NSNotification *)notification{
+    NSLog(@"系统键盘出现");
+}
+//系统键盘消失
+-(void)didWhenSystemKeyboardDisappear:(NSNotification *)notification{
+    NSLog(@"系统键盘消失");
+}
+
 
 
 
