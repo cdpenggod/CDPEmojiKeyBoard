@@ -265,6 +265,9 @@
                 if (_inputView.class==UITextField.class) {
                     UITextField *textField=(UITextField *)_inputView;
                     NSMutableString *str=[NSMutableString stringWithString:textField.text];
+                    if(_cursorPosition>str.length){
+                        _cursorPosition=str.length;
+                    }
                     [str insertString:emojiLabel.text atIndex:_cursorPosition];
                     textField.text=[NSString stringWithFormat:@"%@",str];
                     _cursorPosition=_cursorPosition+2;
@@ -272,6 +275,9 @@
                 if (_inputView.class==UITextView.class) {
                     UITextView *textView=(UITextView *)_inputView;
                     NSMutableString *str=[NSMutableString stringWithString:textView.text];
+                    if(_cursorPosition>str.length){
+                        _cursorPosition=str.length;
+                    }
                     [str insertString:emojiLabel.text atIndex:_cursorPosition];
                     textView.text=[NSString stringWithFormat:@"%@",str];
                     _cursorPosition=_cursorPosition+2;
