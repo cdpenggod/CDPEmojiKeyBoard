@@ -210,6 +210,9 @@
 //CDPEmojiKeyBoardMode2情况下退格字符判断
 -(NSString *)judgeTheText:(NSString *)text{
     NSMutableString *str=[NSMutableString stringWithString:text];
+    if(_cursorPosition>str.length){
+        _cursorPosition=str.length;
+    }
     if (_cursorPosition==0) {
         return str;
     }
