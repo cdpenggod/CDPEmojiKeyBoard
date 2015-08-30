@@ -153,11 +153,15 @@
     //收回emoji键盘
     [self keyboardDisAppear];
     
-    [self.delegateForMode2 didWhenSystemKeyboardAppear:notification];
+    if(_delegateForMode2){
+        [self.delegateForMode2 didWhenSystemKeyboardAppear:notification];
+    }
 }
 //系统键盘消失
 -(void)systemKeyboardWillHide:(NSNotification *)notification{
-    [self.delegateForMode2 didWhenSystemKeyboardDisappear:notification];
+    if(_delegateForMode2){
+        [self.delegateForMode2 didWhenSystemKeyboardDisappear:notification];
+    }
 }
 
 #pragma mark 键盘点击事件
