@@ -9,7 +9,7 @@
 #import "ViewController.h"
 #import "CDPEmojiKeyBoard.h"
 
-@interface ViewController () <CDPEmojiKeyboardDelegate,CDPEmojiKeyboardMode2Delegate> {
+@interface ViewController () <CDPEmojiKeyboardDelegate> {
     UITextField *_textField;//输入视图,textField或者textView
     CDPEmojiKeyBoard *emojiKeyBoard;//emoji键盘
     UIButton *button;//切换键盘按钮
@@ -29,17 +29,12 @@
     _textField.textColor=[UIColor redColor];
     [self.view addSubview:_textField];
     
-    //设置键盘模式
+    //设置键盘模式(0或1)
     _currentKeyboardMode=1;
     
     //创建emoji键盘
     emojiKeyBoard=[[CDPEmojiKeyBoard alloc] initWithInputView:_textField andSuperView:self.view yOfScreenBottom:self.view.bounds.size.height keyboardMode:_currentKeyboardMode];
     emojiKeyBoard.delegate=self;
-    
-    //模式2下必须遵守的代理
-    if (_currentKeyboardMode==1) {
-        emojiKeyBoard.delegateForMode2=self;
-    }
     
     //切换键盘按钮
     button=[[UIButton alloc] initWithFrame:CGRectMake(20,160,24,24)];
@@ -90,8 +85,9 @@
 -(void)didWhenKeyboardDisappear{
     [button setImage:[UIImage imageNamed:@"btn_face"] forState:UIControlStateNormal];
 }
+#pragma mark 模式2情况下必选且只有在模式2的情况下才会执行的方法
+#warning 模式2以下方法为必选------
 
-#pragma mark CDPEmojiKeyboardMode2Delegate
 //系统键盘出现
 -(void)didWhenSystemKeyboardAppear:(NSNotification *)notification{
     [button setImage:[UIImage imageNamed:@"btn_face"] forState:UIControlStateNormal];

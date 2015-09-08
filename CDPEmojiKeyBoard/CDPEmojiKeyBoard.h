@@ -29,13 +29,9 @@ typedef NSInteger CDPEmojiKeyboardMode;//emoji键盘模式
 //emoji键盘退出时执行
 -(void)didWhenKeyboardDisappear;
 
-@end
-
-
-
-//专门为模式2提供的代理,只有CDPEmojiKeyboardMode2时才会调用
-//当mode为CDPEmojiKeyboardMode2时必须遵守
-@protocol CDPEmojiKeyboardMode2Delegate <NSObject>
+@optional
+#warning 模式2时以下方法必选------
+//以下是专门为模式2提供的方法,只有CDPEmojiKeyboardMode2时调用才有效
 
 //系统键盘出现
 -(void)didWhenSystemKeyboardAppear:(NSNotification *)notification;
@@ -44,6 +40,7 @@ typedef NSInteger CDPEmojiKeyboardMode;//emoji键盘模式
 -(void)didWhenSystemKeyboardDisappear:(NSNotification *)notification;
 
 @end
+
 
 
 
@@ -60,8 +57,6 @@ typedef NSInteger CDPEmojiKeyboardMode;//emoji键盘模式
 //代理
 @property (nonatomic,weak) id <CDPEmojiKeyboardDelegate> delegate;
 
-//当mode为CDPEmojiKeyboardMode2时必须遵守的代理
-@property (nonatomic,weak) id <CDPEmojiKeyboardMode2Delegate> delegateForMode2;
 
 //初始化并设置相关参数
 //mode默认为CDPEmojiKeyboardMode1

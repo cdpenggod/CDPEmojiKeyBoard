@@ -153,14 +153,14 @@
     //收回emoji键盘
     [self keyboardDisAppear];
     
-    if(_delegateForMode2){
-        [self.delegateForMode2 didWhenSystemKeyboardAppear:notification];
+    if(_delegate){
+        [_delegate didWhenSystemKeyboardAppear:notification];
     }
 }
 //系统键盘消失
 -(void)systemKeyboardWillHide:(NSNotification *)notification{
-    if(_delegateForMode2){
-        [self.delegateForMode2 didWhenSystemKeyboardDisappear:notification];
+    if(_delegate){
+        [_delegate didWhenSystemKeyboardDisappear:notification];
     }
 }
 
@@ -295,8 +295,6 @@
         default:
             break;
     }
-
-    
 }
 #pragma mark UIScrollViewDelegate
 //滑动事件
@@ -354,7 +352,9 @@
         default:
             break;
     }
-    [self.delegate didWhenKeyboardAppear];
+    if (_delegate) {
+        [_delegate didWhenKeyboardAppear];
+    }
 }
 //退出键盘(CDPEmojiKeyBoardMode1情况下会与输入视图解除绑定)
 -(void)keyboardDisAppear{
@@ -391,7 +391,10 @@
         default:
             break;
     }
-    [self.delegate didWhenKeyboardDisappear];
+    
+    if (_delegate) {
+        [_delegate didWhenKeyboardDisappear];
+    }
 }
 
 -(void)dealloc{
