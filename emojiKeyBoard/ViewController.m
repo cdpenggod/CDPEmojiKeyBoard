@@ -85,9 +85,7 @@
 -(void)didWhenKeyboardDisappear{
     [button setImage:[UIImage imageNamed:@"btn_face"] forState:UIControlStateNormal];
 }
-#pragma mark 模式2情况下必选且只有在模式2的情况下才会执行的方法
-#warning 模式2以下方法为必选------
-
+#pragma mark 模式2情况下才会执行的方法(可选)
 //系统键盘出现
 -(void)didWhenSystemKeyboardAppear:(NSNotification *)notification{
     [button setImage:[UIImage imageNamed:@"btn_face"] forState:UIControlStateNormal];
@@ -97,8 +95,6 @@
 -(void)didWhenSystemKeyboardDisappear:(NSNotification *)notification{
     NSLog(@"系统键盘消失");
 }
-
-
 
 
 - (void)didReceiveMemoryWarning {

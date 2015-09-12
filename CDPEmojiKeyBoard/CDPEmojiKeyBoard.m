@@ -154,13 +154,17 @@
     [self keyboardDisAppear];
     
     if(_delegate){
-        [_delegate didWhenSystemKeyboardAppear:notification];
+        if ([_delegate respondsToSelector:@selector(didWhenSystemKeyboardAppear:)]) {
+            [_delegate didWhenSystemKeyboardAppear:notification];
+        }
     }
 }
 //系统键盘消失
 -(void)systemKeyboardWillHide:(NSNotification *)notification{
     if(_delegate){
-        [_delegate didWhenSystemKeyboardDisappear:notification];
+        if ([_delegate respondsToSelector:@selector(didWhenSystemKeyboardDisappear:)]) {
+            [_delegate didWhenSystemKeyboardDisappear:notification];
+        }
     }
 }
 

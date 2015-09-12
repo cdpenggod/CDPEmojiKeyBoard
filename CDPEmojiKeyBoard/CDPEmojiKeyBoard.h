@@ -29,8 +29,7 @@ typedef NSInteger CDPEmojiKeyboardMode;//emoji键盘模式
 //emoji键盘退出时执行
 -(void)didWhenKeyboardDisappear;
 
-@optional
-#warning 模式2时以下方法必选------
+@optional//可选方法
 //以下是专门为模式2提供的方法,只有CDPEmojiKeyboardMode2时调用才有效
 
 //系统键盘出现
